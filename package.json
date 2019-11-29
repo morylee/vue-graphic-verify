@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack --progress --hide-modules",
+    "dev": "webpack-dev-server --inline --progress --config ./webpack.dev.config.js",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "repository": {
