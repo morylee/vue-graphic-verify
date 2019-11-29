@@ -4,8 +4,30 @@
 
 ## Installation
 
+1）npm install
+
 ``` bash
 npm install vue-graphic-verify --save
+```
+
+2）local install
+
+First, you should build it with the following command.
+
+``` bash
+npm run build
+```
+
+And then, you should pack it with the following command.
+
+``` bash
+npm pack
+```
+
+Finally, enter your project and install it with the following command. It should be noted that the `path` is the path where the package was packed on the operating system in the previous step. And the `name-version` is the name and version of the package. For example, `npm install D:\vue-graphic-verify\vue-graphic-verify-1.0.0.tgz`
+
+``` bash
+npm install path/name-version.tgz
 ```
 
 ## Usage
@@ -16,7 +38,7 @@ By the way, apiAddr defaults to 'https://verify.cloudcrowd.com.cn', webKey defau
 
 More explanation, when you start using it, the apiAddr and webKey are required, and the apiAddr can be only set in main.js. The verifyWidth are nullable, if verifyWidth is null, it will be 100%.
 
-An example as follows
+An example as follows.
 
 ``` bash
 import verify from 'vue-graphic-verify'
