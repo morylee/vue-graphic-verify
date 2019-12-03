@@ -79,5 +79,5 @@ export default {
 
 | Property | Type | Default | Description |
 | :------: | ---- | ------- | ----------- |
-| webKey | String | - | web端身份标志 |
-| verifyWidth | String, Number | - | 按钮宽度 |
+| webKey | String | - | website key |
+| verifyWidth | String, Number | - | verify button's width |
