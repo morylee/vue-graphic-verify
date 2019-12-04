@@ -5,41 +5,42 @@
   color: #999999;
   background: #ffffff;
   border-bottom: 1px solid rgba(204, 204, 204, 0.5);
-}
-.verifyGuideBar .guideInfo {
-  font-size: 14px;
-  color: #333333;
-  vertical-align: top;
-}
-.verifyGuideBar .dragBar {
-  width: 50px;
-  height: 20px;
-  background: #ffffff;
-  border: 2px solid rgba(204, 204, 204, 0.5);
-  display: inline-block;
-  border-radius: 4px;
-  position: absolute;
-  left: 5px;
-  z-index: 200;
-  cursor: grab;
-}
-.verifyGuideBar .dragBar:active, .verifyGuideBar .dragBar:focus {
-  cursor: move;
-}
-.verifyGuideBar .progressBar {
-  width: 100%;
-  height: 12px;
-  margin-top: 4px;
-  background: rgba(204, 204, 204, 0.5);
-  display: inline-block;
-  position: absolute;
-  left: 0px;
-  z-index: 100;
-}
-.verifyGuideBar .freshBtn {
-  position: absolute;
-  right: 5px;
-  width: 20px;
-  z-index: 199;
-  cursor: pointer;
+  text-align: left;
+  .guideInfo {
+    font-size: 14px;
+    color: #333333;
+    vertical-align: top;
+  }
+  .dragBar {
+    width: 50px;
+    height: 20px;
+    background: #ffffff;
+    border: 2px solid rgba(204, 204, 204, 0.5);
+    display: inline-block;
+    border-radius: 4px;
+    position: absolute;
+    left: 5px;
+    z-index: 200;
+    cursor: grab;
+  }
+  .dragBar:active, .dragBar:focus {
+    cursor: move;
+  }
+  .progressBar {
+    width: 100%;
+    height: 12px;
+    margin-top: 4px;
+    background: rgba(204, 204, 204, 0.5);
+    display: inline-block;
+    position: absolute;
+    left: 0px;
+    z-index: 100;
+  }
+  .freshBtn {
+    position: absolute;
+    right: 5px;
+    width: 20px;
+    z-index: 199;
+    cursor: pointer;
+  }
 }

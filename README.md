@@ -36,7 +36,7 @@ You can set graphic verify default props in main.js.
 
 By the way, apiAddr defaults to 'https://verify.cloudcrowd.com.cn', webKey defaults to null, and verifyWidth defaults to null.
 
-More explanation, when you start using it, the apiAddr and webKey are required, and the apiAddr can be only set in main.js. The verifyWidth are nullable, if verifyWidth is null, it will be 100%.
+More explanation, when you start using it, the apiAddr and webKey are required, and the apiAddr can be only set in main.js. The verifyWidth are nullable, if verifyWidth is null, it will adjust by the image's width.
 
 An example as follows.
 

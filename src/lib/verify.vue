@@ -1,11 +1,11 @@
 <template>
-  <div ref="verifyMainBody" class="verifyMainBody" :style="{width: verifyWidth ? verifyWidth + 'px' : '100%'}">
+  <div ref="verifyMainBody" class="verifyMainBody">
     <div class="veirfyBox" :style="verifyBoxClass" v-if="!hide">
       <v-click ref="verifyPopup" :background="background" :series="series" :cols="cols" :guide="guide" :times="times" :bgWidth="bgWidth" :backgroundUp="backgroundUp" @do-verify="validVerify" @do-fresh="initVerify" v-if="mode === 0"></v-click>
       <v-drag ref="verifyPopup" :background="background" :series="series" :cols="cols" :guide="guide" :iconY="iconY" :times="times" :bgWidth="bgWidth" :backgroundUp="backgroundUp" @do-verify="validVerify" @do-fresh="initVerify" v-if="mode === 1"></v-drag>
     </div>
-    <div ref="startVerify" class="startVerify">
-      <div class="loadBtn" @mousedown="initVerify(!loaded)">
+    <div ref="startVerify" class="startVerify" :style="{width: (verifyWidth ? verifyWidth : bgWidth) + 'px'}" @mousedown="initVerify(!loaded)">
+      <div class="loadBtn">
         <span class="successInfo" v-if="verifyResult">验证成功</span>
         <span class="errorInfo" v-else-if="message">{{message}}</span>
         <span v-else>点击打开验证</span>
@@ -37,14 +37,15 @@ export default {
   },
   data () {
     return {
+      paramLoaded: false,
       loaded: false,
       hide: true,
       mode: null,
       key: null,
       aesKey: null,
       rsaPubKey: null,
-      bgWidth: 450,
-      bgHeight: 240,
+      bgWidth: null,
+      bgHeight: null,
       background: [],
       series: [],
       cols: 1,
@@ -118,13 +119,21 @@ export default {
         this.message = null
         this.bgWidth = res.width
         this.bgHeight = res.height
+        this.paramLoaded = true
       } else {
         this.message = res.msg
       }
     },
     async initVerify (load) {
-      if (!load || this.verifyResult) {
-        this.hide = !this.hide
+      if (!this.paramLoaded) {
+        return
+      }
+      if (!load) {
+        if (this.verifyResult) {
+          this.hide = true
+        } else {
+          this.hide = !this.hide
+        }
         return
       }
       this.loading = true
@@ -173,7 +182,7 @@ export default {
       }
     },
     reset () {
-      this.load = false
+      this.loaded = false
       this.verifyResult = null
     }
   }
