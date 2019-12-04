@@ -21,7 +21,7 @@
 import vClick from './vClick'
 import vDrag from './vDrag'
 import {rsaPubDecrypt, rsaPubEncrypt, aesDecrypt, aesEncrypt, md5Encrypt16} from './security/security.js'
-import {loadParams, initVerify, doVerify} from './api/verify.js'
+import {loadParams, initVerify, doVerify, delVerify, delVerifyToken} from './api/verify.js'
 
 export default {
   name: 'GraphicVerify',
@@ -78,10 +78,13 @@ export default {
   mounted () {
     window.addEventListener('scroll', this.adjustVerifyBox)
     window.addEventListener('resize', this.adjustVerifyBox)
+    window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
   },
   destroyed () {
     window.removeEventListener('scroll', this.adjustVerifyBox)
     window.removeEventListener('resize', this.adjustVerifyBox)
+    window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
+    this.beforeunloadFn(null)
   },
   methods: {
     clickOutside (event) {
@@ -113,6 +116,10 @@ export default {
         this.backgroundUp = false
       }
     },
+    beforeunloadFn (e) {
+      this.delVerify(this.key)
+      this.delVerifyToken(this.verifyResult)
+    },
     async verifyParams () {
       let res = await loadParams(this.webKey)
       if (res.httpCode === 200) {
@@ -137,6 +144,7 @@ export default {
         return
       }
       this.loading = true
+      let currKey = this.key
       let res = await initVerify(this.webKey)
       if (res.httpCode === 200 && res.success) {
         this.loaded = true
@@ -157,6 +165,7 @@ export default {
         this.iconY = parseInt(rsaPubDecrypt(res.ih, this.rsaPubKey))
         this.times = res.n
         this.adjustVerifyBox()
+        this.delVerify(currKey)
       } else {
         this.message = res.msg
       }
@@ -181,9 +190,21 @@ export default {
         this.$refs.verifyPopup.verifyCallback(null, true)
       }
     },
+    async delVerify (key) {
+      if (key) {
+        await delVerify(this.webKey, key)
+      }
+    },
+    async delVerifyToken (token) {
+      if (token) {
+        await delVerifyToken(this.webKey, token)
+      }
+    },
     reset () {
+      let token = this.verifyResult
       this.loaded = false
       this.verifyResult = null
+      this.delVerifyToken(token)
     }
   }
 };
