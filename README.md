@@ -173,5 +173,5 @@ export default {
 ## Callbacks
 
 | Name | Out Param Type | Description |
-| :------: | ---- | ------- | ----------- |
+| :------: | ------- | ----------- |
 | verify-callback | String | return the successful token of `GraphicVerify` |
