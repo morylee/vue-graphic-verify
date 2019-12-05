@@ -1,16 +1,19 @@
 <template>
   <div ref="verifyMainBody" class="verifyMainBody">
     <div class="veirfyBox" :style="verifyBoxClass" v-if="!hide">
-      <v-click ref="verifyPopup" :background="background" :series="series" :cols="cols" :guide="guide" :times="times" :bgWidth="bgWidth" :backgroundUp="backgroundUp" @do-verify="validVerify" @do-fresh="initVerify" v-if="mode === 0"></v-click>
-      <v-drag ref="verifyPopup" :background="background" :series="series" :cols="cols" :guide="guide" :iconY="iconY" :times="times" :bgWidth="bgWidth" :backgroundUp="backgroundUp" @do-verify="validVerify" @do-fresh="initVerify" v-if="mode === 1"></v-drag>
+      <v-click ref="verifyPopup" :background="background" :series="series" :cols="cols" :guide="guide" :times="times" :bgWidth="bgWidth" :backgroundUp="backgroundUp" :successColor="successColor" :failureColor="failureColor" @do-verify="validVerify" @do-fresh="initVerify" v-if="mode === 0"></v-click>
+      <v-drag ref="verifyPopup" :background="background" :series="series" :cols="cols" :guide="guide" :iconY="iconY" :times="times" :bgWidth="bgWidth" :backgroundUp="backgroundUp" :successColor="successColor" :failureColor="failureColor" @do-verify="validVerify" @do-fresh="initVerify" v-if="mode === 1"></v-drag>
     </div>
-    <div ref="startVerify" class="startVerify" :style="{width: (verifyWidth ? verifyWidth : bgWidth) + 'px'}" @mousedown="initVerify(!loaded)">
+    <div ref="startVerify" class="startVerify" :style="startVerifyStyle" @mousedown="initVerify(!loaded)">
       <div class="loadBtn">
         <span class="successInfo" v-if="verifyResult">验证成功</span>
         <span class="errorInfo" v-else-if="message">{{message}}</span>
-        <span v-else>点击打开验证</span>
-        <img class="logoImg" src="./images/loadingIcon.gif" v-if="loading">
-        <img class="logoImg" src="./images/right.png" v-else-if="verifyResult">
+        <span v-else-if="hide">点击打开验证</span>
+        <span v-else>点击关闭验证</span>
+        <img class="loading" src="./images/loadingIcon.gif" v-if="loading">
+        <span class="success" v-else-if="verifyResult">
+          <font-awesome-icon icon="check-circle"></font-awesome-icon>
+        </span>
         <img class="logoImg" src="./images/logo.png" v-else>
       </div>
     </div>
@@ -33,6 +36,30 @@ export default {
     webKey: {
       type: String,
       default: null
+    },
+    border: {
+      type: String,
+      default: '1px solid rgba(51, 51, 51, 0.25)'
+    },
+    borderRadius: {
+      type: String,
+      default: '4px'
+    },
+    bgColor: {
+      type: String,
+      default: 'rgba(255, 255, 255, 0.9)'
+    },
+    color: {
+      type: String,
+      default: '#333333'
+    },
+    successColor: {
+      type: String,
+      default: '#1ca21c'
+    },
+    failureColor: {
+      type: String,
+      default: '#dd1010'
     }
   },
   data () {
@@ -69,6 +96,34 @@ export default {
         document.removeEventListener('click',this.clickOutside, true)
       } else {
         document.addEventListener('click',this.clickOutside, true)
+      }
+    }
+  },
+  computed: {
+    startVerifyStyle: function () {
+      let verifyWidth = null
+      if (typeof this.verifyWidth === 'string') {
+        verifyWidth = this.verifyWidth
+        if (verifyWidth.indexOf('px') > -1) {
+          verifyWidth = verifyWidth.substring(0, verifyWidth.indexOf('px'))
+        } else if (isNaN(verifyWidth)) {
+          verifyWidth = null
+        }
+      } else if (typeof this.verifyWidth === 'number') {
+        verifyWidth = this.verifyWidth
+      }
+      let color = this.color
+      if (this.verifyResult) {
+        color = this.successColor
+      } else if (this.message) {
+        color = this.failureColor
+      }
+      return {
+        width: (verifyWidth ? verifyWidth : this.bgWidth) + 'px',
+        border: this.border,
+        borderRadius: this.borderRadius,
+        backgroundColor: this.bgColor,
+        color: color
       }
     }
   },

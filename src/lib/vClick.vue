@@ -9,9 +9,9 @@
       </div>
       <div class="clickedIcon" :style="{left: (pos[0] - 12 )+ 'px', top: (pos[1] - 12) + 'px'}" v-for="(pos, index) in positions" :key="index">{{index + 1}}</div>
       <div class="verifyingIcon" v-if="showVerifying">
-        <img class="verifyRes" src="./images/right.png" v-if="success === true">
-        <img class="verifyRes" src="./images/fault.png" v-else-if="success === false">
-        <img class="verifyRes" src="./images/loading.gif" v-else>
+        <font-awesome-icon icon="check-circle" class="verifyRes success" :style="{color: successColor}" v-if="success === true"></font-awesome-icon>
+        <font-awesome-icon icon="times-circle" class="verifyRes failure" :style="{color: failureColor}" v-else-if="success === false"></font-awesome-icon>
+        <img class="verifyRes loading" src="./images/loading.gif" v-else>
       </div>
     </div>
     <guide-bar :guide="guide" @do-fresh="fresh" v-if="backgroundUp"></guide-bar>
@@ -54,6 +54,14 @@ export default {
     backgroundUp: {
       type: Boolean,
       default: true
+    },
+    successColor: {
+      type: String,
+      default: '#1ca21c'
+    },
+    failureColor: {
+      type: String,
+      default: '#dd1010'
     }
   },
   data () {

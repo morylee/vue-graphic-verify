@@ -1,22 +1,48 @@
 import Vue from 'vue'
 import gVerify from './lib/verify'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {faCheckCircle, faTimesCircle} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
-const Plugin = {
+library.add(faCheckCircle, faTimesCircle)
+
+const GVerifyPlugin = {
   install (VueComponent, options = {}) {
     if (Object.keys(options).length) {
       if (options.apiAddr) {
         Vue.prototype.apiAddr = options.apiAddr
       }
-      if (typeof options.webKey === 'string') {
+      if (options.webKey) {
         gVerify.props.webKey.default = options.webKey
       }
-      if (typeof options.verifyWidth === 'string' || typeof options.verifyWidth === 'number') {
+      if (options.verifyWidth) {
         gVerify.props.verifyWidth.default = options.verifyWidth
+      }
+      if (options.border) {
+        gVerify.props.border.default = options.border
+      }
+      if (options.borderRadius) {
+        gVerify.props.borderRadius.default = options.borderRadius
+      }
+      if (options.bgColor) {
+        gVerify.props.bgColor.default = options.bgColor
+      }
+      if (options.color) {
+        gVerify.props.color.default = options.color
+      }
+      if (options.successColor) {
+        gVerify.props.successColor.default = options.successColor
+      }
+      if (options.failureColor) {
+        gVerify.props.failureColor.default = options.failureColor
       }
     }
     VueComponent.component(gVerify.name, gVerify)
+    VueComponent.component('font-awesome-icon', FontAwesomeIcon)
   }
 }
 
-export {gVerify}
-export default Plugin
+Vue.use(GVerifyPlugin, {})
+
+export {GVerifyPlugin}
+export default gVerify

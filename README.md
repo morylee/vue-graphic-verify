@@ -32,33 +32,55 @@ npm install path/name-version.tgz
 
 ## Usage
 
-You can set graphic verify default props in main.js.
+You can set `GraphicVerify` default props in main.js.
 
-By the way, apiAddr defaults to 'https://verify.cloudcrowd.com.cn', webKey defaults to null, and verifyWidth defaults to null.
+By the way, when you start using it, you should know that the `apiAddr`(defaults to 'https://verify.cloudcrowd.com.cn') and `webKey` are required, and if you wanna to change the `apiAddr`, you can only set it in main.js. The `verifyWidth` are nullable, if `verifyWidth` is null, it will adjust by the image's width. The other props can be set freely.
 
-More explanation, when you start using it, the apiAddr and webKey are required, and the apiAddr can be only set in main.js. The verifyWidth are nullable, if verifyWidth is null, it will adjust by the image's width.
+So let's start, you can use the component in two ways.
 
-An example as follows.
+The first way is as follows.
 
+main.js.
 ``` bash
-import verify from 'vue-graphic-verify'
+import Vue from 'vue'
+import {GVerifyPlugin} from 'vue-graphic-verify'
 
-Vue.use(verify, {
+Vue.use(GVerifyPlugin, {
   apiAddr: 'http://localhost:8888',
   webKey: 'b7db153be64749799ab48a61ebcf7a1c',
   verifyWidth: 300
 })
 ```
 
-And next, you can import the component into your template as follows.
+Your templete file.
+``` bash
+<template>
+  <graphic-verify :webKey="webKey" :verifyWidth="verifyWidth"></graphic-verify>
+</template>
 
+<script>
+export default {
+  name: 'app',
+  data () {
+    return {
+      webKey: 'b7db153be64749799ab48a61ebcf7a1c',
+      verifyWidth: '450'
+    }
+  }
+}
+</script>
+```
+
+And the other way as below.
+
+Your templete file.
 ``` bash
 <template>
   <g-verify :webKey="webKey" :verifyWidth="verifyWidth"></g-verify>
 </template>
 
 <script>
-import {gVerify} from 'vue-graphic-verify'
+import gVerify from 'vue-graphic-verify'
  
 export default {
   name: 'app',
@@ -75,9 +97,81 @@ export default {
 </script>
 ```
 
+After the above steps, you can regist a callback function to receive the successful token of `GraphicVerify`, like below.
+
+``` bash
+<template>
+  <graphic-verify :webKey="webKey" :verifyWidth="verifyWidth" @verify-callback="recordToken"></graphic-verify>
+</template>
+
+<script>
+export default {
+  name: 'app',
+  data () {
+    return {
+      webKey: 'b7db153be64749799ab48a61ebcf7a1c',
+      verifyWidth: '450',
+      verifyToken: null
+    }
+  },
+  methods: {
+    recordToken (token) {
+      this.verifyToken = token
+    }
+  }
+}
+</script>
+```
+
+Also, you may want to reset the `GraphicVerify`, and we provide a method to do that.
+
+``` bash
+<template>
+  <div>
+    <graphic-verify ref="gVerifyBtn" :webKey="webKey" :verifyWidth="verifyWidth"></graphic-verify>
+    <button @click.prevent="reset">重置</button>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'app',
+  data () {
+    return {
+      webKey: 'b7db153be64749799ab48a61ebcf7a1c',
+      verifyWidth: '450'
+    }
+  },
+  methods: {
+    reset () {
+      this.$refs.gVerifyBtn.reset()
+    }
+  }
+}
+</script>
+```
+
 ## Props
 
 | Property | Type | Default | Description |
 | :------: | ---- | ------- | ----------- |
 | webKey | String | - | website key |
-| verifyWidth | String, Number | - | verify button's width |
+| verifyWidth | String, Number | image's width | `GraphicVerify` button's width |
+| border | String | 1px solid rgba(51, 51, 51, 0.25) | `GraphicVerify` button's border |
+| borderRadius | String | 4px | `GraphicVerify` button's border radius |
+| bgColor | String | rgba(255, 255, 255, 0.9) | `GraphicVerify` button's background color |
+| color | String | #333333 | `GraphicVerify` button's default color |
+| successColor | String | #1ca21c | `GraphicVerify` success color |
+| failureColor | String | #dd1010 | `GraphicVerify` failure color |
+
+## methods
+
+| Name | In Param Type | Description |
+| :------: | ---- | ----------- |
+| reset() | - | reset the `GraphicVerify` |
+
+## Callbacks
+
+| Name | Out Param Type | Description |
+| :------: | ---- | ------- | ----------- |
+| verify-callback | String | return the successful token of `GraphicVerify` |

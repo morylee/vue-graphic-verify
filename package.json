@@ -15,6 +15,9 @@
     "url": "git+https://github.com/morylee/vue-graphic-verify.git"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/vue-fontawesome": "^0.1.8",
     "crypto-js": "^3.1.9-1",
     "shelljs": "^0.7.8",
     "vue": "^2.5.11"
