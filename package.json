@@ -1,7 +1,7 @@
 {
   "name": "vue-graphic-verify",
   "description": "A Vue Graphic Verify Project",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "mory.lee <mory.lee@outlook.com>",
   "main": "dist/vue-graphic-verify.js",
   "license": "MIT",
@@ -40,6 +40,9 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-3": "^6.24.1",
+    "compression-webpack-plugin": "^1.1.12",
+    "copy-webpack-plugin": "^4.0.0",
+    "html-webpack-plugin": "^3.2.0",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "es6-promise": "^4.1.1",
