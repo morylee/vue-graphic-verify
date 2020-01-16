@@ -14,7 +14,7 @@
         <span class="success" v-else-if="verifyResult">
           <font-awesome-icon icon="check-circle"></font-awesome-icon>
         </span>
-        <img class="logoImg" src="./images/logo.png" v-else>
+        <img class="logoImg" :src="isOutImg() ? logoImgPath : require('' + getLogoImgPath)" v-else>
       </div>
     </div>
   </div>
@@ -60,6 +60,14 @@ export default {
     failureColor: {
       type: String,
       default: '#dd1010'
+    },
+    logoImgPath: {
+      type: String,
+      default: null
+    },
+    sysType: {
+      type: Number,
+      default: 0
     }
   },
   data () {
@@ -125,6 +133,16 @@ export default {
         backgroundColor: this.bgColor,
         color: color
       }
+    },
+    getLogoImgPath: function () {
+      switch (this.sysType) {
+        case 1:
+          return './images/secInLogo.png'
+        case 2:
+          return './images/adLogo.png'
+        default:
+          return './images/logo.png'
+      }
     }
   },
   created () {
@@ -147,6 +165,17 @@ export default {
         this.hide = true
       }
     },
+    isOutImg () {
+      if (this.logoImgPath === null || this.logoImgPath === undefined) return false
+      return this.logoImgPath.indexOf('http://') === 0 || this.logoImgPath.indexOf('https://') === 0
+    },
+//  getLogoImgPath () {
+//    if (this.sysType === 1) {
+//      return './images/secInLogo.png'
+//    } else {
+//      return './images/logo.png'
+//    }
+//  },
     adjustVerifyBox () {
       let mainToTop = this.$refs.verifyMainBody.getBoundingClientRect().top
       let mainRightToLeft = this.$refs.verifyMainBody.getBoundingClientRect().right

@@ -36,6 +36,12 @@ const GVerifyPlugin = {
       if (options.failureColor) {
         gVerify.props.failureColor.default = options.failureColor
       }
+      if (options.logoImgPath) {
+        gVerify.props.logoImgPath.default = options.logoImgPath
+      }
+      if (options.sysType) {
+        gVerify.props.sysType.default = options.sysType
+      }
     }
     VueComponent.component(gVerify.name, gVerify)
     VueComponent.component('font-awesome-icon', FontAwesomeIcon)
