@@ -1,6 +1,6 @@
 <template>
-  <div class="verifyGuideBar" @mousemove="movingDrag" @mouseup="finishDrag">
-    <span ref="dragBar" class="dragBar" :style="{left: '5px'}" @mousedown="startDrag"></span>
+  <div class="verifyGuideBar" @touchmove="movingDrag" @touchend="finishDrag" @mousemove="movingDrag" @mouseup="finishDrag">
+    <span ref="dragBar" class="dragBar" :style="{left: '5px'}" @touchstart="startDrag" @mousedown="startDrag"></span>
     <span class="progressBar"></span>
     <img class="freshBtn" src="../images/refresh.png" @click.prevent="fresh()" title="刷新">
   </div>

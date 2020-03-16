@@ -1,13 +1,13 @@
 <template>
   <div class="dragVerify" :style="{width: bgWidth + 'px'}">
     <guide-bar ref="dragGuideBar" @moving-drag="movingDrag" @finish-drag="finishDrag" @start-drag="startDrag" @do-fresh="fresh" v-if="!backgroundUp"></guide-bar>
-    <div class="backgroundImg" @mousemove="movingDrag" @mouseup="finishDrag">
+    <div class="backgroundImg" @touchmove="movingDrag" @touchend="finishDrag" @mousemove="movingDrag" @mouseup="finishDrag">
       <div class="imageBox">
         <div class="imageIcon" v-for="row in (series.length / cols)" :key="row">
           <img :src="'data:image/png;base64,' + background[series[cols * (row - 1) + col - 1]]" v-for="col in cols" :key="col">
         </div>
       </div>
-      <div ref="guideIcon" class="guideIcon" :style="{top: iconY + 'px', left: '0px'}" @mousedown="startDrag">
+      <div ref="guideIcon" class="guideIcon" :style="{top: iconY + 'px', left: '0px'}" @touchstart="startDrag" @mousedown="startDrag">
         <div class="shelter"></div>
         <img :src="'data:image/png;base64,' + guide">
       </div>

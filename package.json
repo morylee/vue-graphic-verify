@@ -1,7 +1,7 @@
 {
   "name": "vue-graphic-verify",
   "description": "A Vue Graphic Verify Project",
-  "version": "1.1.1",
+  "version": "1.1.4",
   "author": "mory.lee <mory.lee@outlook.com>",
   "main": "dist/vue-graphic-verify.js",
   "license": "MIT",
